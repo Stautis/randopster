@@ -30,4 +30,5 @@ By default, Randopster is run with topsters from topsters/valid_samples.
 # TODO
 
 When initializing a new environment one might encounter an issue with CV2. Resolve. 
+
 Find a way to get genre information for increased recommendation specificity. 
