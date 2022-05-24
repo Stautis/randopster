@@ -1,0 +1,5 @@
+*.png
+tesseract_localizer.py
+cropper.py
+randopster.py
+topsters/crop.png
