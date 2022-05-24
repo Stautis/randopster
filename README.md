@@ -20,4 +20,4 @@ CV2 is used to display topster images. To proceed from an image press any key. I
 
 # TODO
 
-When initializing a new environment one might encounter an issue with cv2. Resolve. 
+When initializing a new environment one might encounter an issue with CV2. Resolve. 
