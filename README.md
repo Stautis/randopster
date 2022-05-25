@@ -16,6 +16,10 @@ python dev_randopster.py
 
 # To Note
 
+pytesseract wrapper depends on Tesseract OCR being installed on the system. In this case located at '/usr/bin/tesseract'.
+
+Tesseract OCR is compatible with multiple languages at once. It is now implemented to recognize both Enlish and Japenese, as these are particularly prevalent in topsters. It comes with a certain cost to the interpretation of either language and additional clean-up measurements that must be taken for handling symbols. To enable more languages all one has to do is to download additional models from https://github.com/tesseract-ocr/tessdata and move them to the local tessdata directory, in this case '/usr/share/tesseract-ocr/5/tessdata/'.  
+
 CV2 is used to display topster images. To proceed from an image press any key. If the window is closed the program will hang. 
 
 The topster folder contains several types of topster examples:

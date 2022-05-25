@@ -1,5 +1,7 @@
 import os
+import re
 import sys
+import argparse
 from os import listdir
 from os.path import isfile, join
 import time
@@ -295,8 +297,30 @@ def findAlbumBox(df):
         if int(float(row["conf"])) > 5:
             return int(row["left"]),int(row["top"]),int(row["width"]),int(row["height"])
 
+'''
+This method takes text elements and strips them of specific elements of contamination
+which may result from differently formatted topsters, such as numbered lists. It does
+this by matching against several regex patterns. This could be done more elegantly if
+a dictonary is used to hold regex patterns as keys as substituted token as value, but
+this is problematic when keys are overlapping. 
+'''
+
+
+def multiple_re(text):
+    pat1 = r'^\.\s'
+    pat2 = r'^(\d+)\.\s'
+    pat3 = r'^\:\s'
+    pat4 = r'^\・\s'
+    master_pat = r'|'.join((pat1, pat2, pat3, pat4))
+    return re.sub(master_pat, '', text)
+
+parser = argparse.ArgumentParser(description="option for running Randopsters with different data sets")
+parser.add_argument('--path', dest="path", type=str, default="valid", help="Run Randopster with one of four datasets: valid, dev, test, or fail")
+
+args = parser.parse_args()
+
 print("Initiating random music inspiration game!\n")
-path = "topsters/valid_samples/" #directory .../test_samples/ or .../valid_samples/ or .../dev_samples/  depending on use
+path = "topsters/"+args.path+"_samples/" #directory .../test_samples/ or .../valid_samples/ or .../dev_samples/  depending on use
 onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
 
 index = random.randint(0,len(onlyfiles)-1)
@@ -309,7 +333,6 @@ results = pytesseract.image_to_data(rgb, output_type=Output.DICT)
 df = pd.DataFrame(results, columns=["left","top","width","height","text","conf"])
 df["area"] = df["width"]*df["height"]
 df = df.sort_values("area",ascending=False)
-#print(df.head())
 
 x,y,w,h = findAlbumBox(df)
 
@@ -341,11 +364,14 @@ pytesseract.pytesseract.tesseract_cmd = r"/usr/bin/tesseract"
 
 print("Scanning image for text.\n")
 
-string=pytesseract.image_to_string("topsters/right_crop.png")
+string=pytesseract.image_to_string("topsters/right_crop.png", lang = "eng+jpn")
+#print(pytesseract.image_to_data("topsters/right_crop.png", lang = "eng"))
+#print(pytesseract.image_to_data("topsters/right_crop.png", lang = "eng+jpn"))
 string_list= string.split("\n")
 fillist = list(filter(None,string_list))
 #fillist.remove("\x0c")
-fillist[:] = [x for x in fillist if x != " "]
+#fillist[:] = [multiple_re(x) for x in fillist if x != " " and len(x)>3 and ('-' in x or '—' in x)]
+fillist[:] = [multiple_re(x) for x in fillist if x != " " and len(x)>3 and ('-' in x or '—' in x or 'ー' in x)]
 
 for x in fillist:
     print(x)
@@ -391,5 +417,5 @@ while(flag):
     else:
         continue
 
-print("Thanks for using randopster.")
+print("Thanks for using Randopster.")
 
