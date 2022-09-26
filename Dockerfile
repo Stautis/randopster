@@ -1,9 +1,8 @@
 FROM continuumio/miniconda3
 
 RUN apt-get update \
-  && apt-get -y install tesseract-ocr \
-  && apt-get -y install ffmpeg libsm6 libxext6 
-
+  && apt-get -y install tesseract-ocr 
+  
 COPY . /app
 
 WORKDIR /app
