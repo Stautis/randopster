@@ -4,15 +4,29 @@ It takes a set of topster images, and returns a random album recommendation.
 
 To run, create a conda environment using the following command:
 
-conda create --name randopenv --file env.txt
+`conda create --name randopenv --file env.txt`
 
 Activate the environment, and within do:
 
-pip install coverpy
+`pip install coverpy`
 
 Run with:
 
-python dev_randopster.py
+`python dev_randopster.py`
+
+# Docker
+
+Randopster has now been dockerized. 
+
+To build, from randopster folder, run:
+
+`sudo docker build -t randop:tag .`
+
+To spin up interactive container from image, run:
+
+`sudo docker run --rm -it randop:tag`
+
+The script used as entrypoint for dockerization is slightly modified from the original due to issues with CV2 within docker. Instead of using cv2.imshow() an attempt is made to use matplotlib.pyplot.imshow(), although this has not successfully been implemented as of yet.
 
 # To Note
 
@@ -36,3 +50,7 @@ By default, Randopster is run with topsters from topsters/valid_samples.
 When initializing a new environment one might encounter an issue with CV2. Resolve. 
 
 Find a way to get genre information for increased recommendation specificity. 
+
+See if size of docker images can be reduced. 
+
+Get dockerized version to display images. 
