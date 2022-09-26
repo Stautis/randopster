@@ -407,7 +407,7 @@ while(flag):
         #cv2.imshow("Recommendation",rec)
     except:
         e = sys.exc_info()[0]
-        print("Error:",e)
+        print("Could not display image for given recommendation")
     val = input("Are you satisfied with your recommendation? [y/n]: ")
     if val == "y":
         if 'rec' in locals():
