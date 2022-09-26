@@ -394,7 +394,7 @@ while(flag):
     try:
         result = coverpy.get_cover(recName, limit)
         # Set a size for the artwork (first parameter) and get the result url.
-        print(result.name)
+        #print(result.name)
         print(result.artwork(250))
         response = requests.get(result.artwork(500))
         file = open("topsters/download.jpg", "wb")
